@@ -96,7 +96,7 @@ public class ApiTest {
     /**
      * check URL can GET data of people by date from end point.
      * day for test is empty date
-     * status is 404
+     * status is 202
      *
      * @throws IOException from URL and connection.
      */
