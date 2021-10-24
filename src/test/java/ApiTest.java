@@ -9,9 +9,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 public class ApiTest {
     private final String url = "https://suchonsite-server.herokuapp.com";
 
+    /**
+     * Get connection form end point and use GET request.
+     * @param url is url of end point
+     * @return connection of http URL connection
+     *
+     * @throws IOException from URL and connection.
+     */
     private HttpURLConnection getConnection(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -19,6 +27,14 @@ public class ApiTest {
         return connection;
     }
 
+
+    /**
+     * check URL can GET data of all people from end point.
+     *
+     * status is 200
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetAllPeople() throws IOException {
         URL urlEndPoint = new URL(url + "/people/all");
@@ -27,14 +43,29 @@ public class ApiTest {
         assertEquals("application/json; charset=utf-8",connection.getHeaderField("Content-Type"));
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     *
+     * status is 200
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByDate() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/20-10-2021");
         HttpURLConnection connection = getConnection(urlEndPoint);
         assertEquals(200,connection.getResponseCode());
+        assertEquals("OK",connection.getResponseMessage());
         assertEquals("application/json; charset=utf-8",connection.getHeaderField("Content-Type"));
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is today
+     * status is 200
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByTodayDate() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -42,17 +73,49 @@ public class ApiTest {
         URL urlEndPoint = new URL(url + "/people/by_date/" + dtf.format(now));
         HttpURLConnection connection = getConnection(urlEndPoint);
         assertEquals(200,connection.getResponseCode());
+        assertEquals("OK",connection.getResponseMessage());
 
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is previous day
+     * status is 200
+     *
+     * @throws IOException from URL and connection.
+     */
+    @Test
+    public void testGetPeopleByPreviousDate() throws IOException {
+        URL urlEndPoint = new URL(url + "/people/by_date/20-9-2021");
+        HttpURLConnection connection = getConnection(urlEndPoint);
+        assertEquals(200,connection.getResponseCode());
+        assertEquals("OK",connection.getResponseMessage());
+
+    }
+
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is empty date
+     * status is 404
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByNoDate() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/");
         HttpURLConnection connection = getConnection(urlEndPoint);
-        assertEquals(404,connection.getResponseCode());
+        assertEquals(202,connection.getResponseCode());
+        assertEquals("no date included",connection.getResponseMessage());
 
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is invalid because set month to 13.
+     * status is 404
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByInvalidMonth() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/20-13-2021");
@@ -60,6 +123,13 @@ public class ApiTest {
         assertEquals(404,connection.getResponseCode());
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is invalid because set day and month to String.
+     * status is 404
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByInvalidValue() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/ten-twelve-2021");
@@ -67,6 +137,13 @@ public class ApiTest {
         assertEquals(404,connection.getResponseCode());
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is invalid because set date to String.
+     * status is 404
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByInvalidValueNotDate() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/test");
@@ -74,6 +151,13 @@ public class ApiTest {
         assertEquals(404,connection.getResponseCode());
     }
 
+    /**
+     * check URL can GET data of people by date from end point.
+     * day for test is invalid because set year to future.
+     * status is 404
+     *
+     * @throws IOException from URL and connection.
+     */
     @Test
     public void testGetPeopleByFutureYear() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM");
@@ -85,7 +169,14 @@ public class ApiTest {
         assertEquals(404,connection.getResponseCode());
     }
 
-
+    /**
+     * Check data that get form end point is correct.
+     *
+     * status is 200
+     *
+     * @throws IOException from URL and connection.
+     * @throws ParseException from JSONParser
+     */
     @Test
     public void testGetPeopleCorrectDate() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
@@ -99,6 +190,8 @@ public class ApiTest {
             data = (JSONObject) parser.parse(thisLine);
         }
         assertEquals("20-10-2021",data.get("date"));
+        assertEquals(200,connection.getResponseCode());
     }
+
 
 }
