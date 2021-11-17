@@ -14,6 +14,7 @@ public class ApiTest {
     private final String url = "https://suchonsite-server.herokuapp.com";
 
     /**
+     *
      * Get connection form end point and use GET request.
      * @param url is url of end point
      * @return connection of http URL connection
@@ -29,6 +30,7 @@ public class ApiTest {
 
 
     /**
+     * TestID: 1
      * check URL can GET data of all people from end point.
      *
      * status is 200
@@ -44,6 +46,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 2
      * check URL can GET data of people by date from end point.
      *
      * status is 200
@@ -60,6 +63,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 3
      * check URL can GET data of people by date from end point.
      * day for test is today
      * status is 200
@@ -78,6 +82,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 4
      * check URL can GET data of people by date from end point.
      * day for test is previous day
      * status is 200
@@ -94,6 +99,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 5
      * check URL can GET data of people by date from end point.
      * day for test is empty date
      * status is 202
@@ -110,6 +116,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 6
      * check URL can GET data of people by date from end point.
      * day for test is invalid because set month to 13.
      * status is 404
@@ -124,6 +131,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 7
      * check URL can GET data of people by date from end point.
      * day for test is invalid because set day and month to String.
      * status is 404
@@ -138,6 +146,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 8
      * check URL can GET data of people by date from end point.
      * day for test is invalid because set date to String.
      * status is 404
@@ -152,6 +161,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 9
      * check URL can GET data of people by date from end point.
      * day for test is invalid because set year to future.
      * status is 404
@@ -170,6 +180,7 @@ public class ApiTest {
     }
 
     /**
+     * TestID: 10
      * Check data that get form end point is correct.
      *
      * status is 200

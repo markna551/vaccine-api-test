@@ -11,12 +11,6 @@ apply plugin: 'java-library'
 apply plugin: 'jacoco'
 apply plugin: 'java'
 
-// Make sure we are using Java 8.
-if(JavaVersion.current() != JavaVersion.VERSION_1_8)
-    throw new GradleException("This project requires Java 8, but it's running on "+JavaVersion.current())
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
 
 
 // In this section you declare where to find the dependencies of your project
