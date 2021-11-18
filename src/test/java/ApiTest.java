@@ -110,8 +110,8 @@ public class ApiTest {
     public void testGetPeopleByNoDate() throws IOException {
         URL urlEndPoint = new URL(url + "/people/by_date/");
         HttpURLConnection connection = getConnection(urlEndPoint);
-        assertEquals(202,connection.getResponseCode());
-        assertEquals("no date included",connection.getResponseMessage());
+        assertEquals(406,connection.getResponseCode());
+        assertEquals("Not Acceptable",connection.getResponseMessage());
 
     }
 
@@ -163,8 +163,9 @@ public class ApiTest {
     /**
      * TestID: 9
      * check URL can GET data of people by date from end point.
-     * day for test is invalid because set year to future.
-     * status is 404
+     * day for test is invalid because set year to future
+     * and message should return No Content.
+     * status is 204
      *
      * @throws IOException from URL and connection.
      */
@@ -176,7 +177,8 @@ public class ApiTest {
         String year = dtf.format(now) + "-" + nextYear;
         URL urlEndPoint = new URL(url + "/people/by_date/" + year);
         HttpURLConnection connection = getConnection(urlEndPoint);
-        assertEquals(404,connection.getResponseCode());
+        assertEquals(204,connection.getResponseCode());
+        assertEquals("No Content",connection.getResponseMessage());
     }
 
     /**
